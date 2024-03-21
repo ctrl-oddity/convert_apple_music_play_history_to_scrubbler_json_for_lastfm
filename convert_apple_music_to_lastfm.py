@@ -2,16 +2,28 @@ import csv
 import datetime
 import json
 
+# formatting an apple music track play history file gotten via https://privacy.apple.com/
+# to a json format supported by the app Last.fm-Scrubbler-WPF-Beta-1.28
+
 output_json = []
-with open("play_history.csv", newline='', encoding="utf-8") as csv_file:
+with open("Apple Music - Track Play History.csv", newline='', encoding="utf-8") as csv_file:
         history_file = csv.reader(csv_file)
-        skip = False
+        skip = True
+        prev = []
         for row in history_file:
-              skip = not skip
               if skip:
-                    continue
+                 skip = False
+                 continue
               
               artist_and_track = row[0].split('-')
+              # try to fix the duplication issue (true vs. false)
+              # this will of course make repeated listening of a song wrong
+              # but that shouldn't be too common
+              if artist_and_track == prev:
+                   continue
+              
+              prev = artist_and_track
+
               artist = artist_and_track[0].strip()
               track = artist_and_track[1].strip()
               timestamp_value = int(row[1]) 

@@ -16,11 +16,14 @@ with open("Apple Music - Track Play History.csv", newline='', encoding="utf-8") 
                  continue
               
               artist_and_track = row[0].split('-')
+              if len(artist_and_track) < 2:
+                continue
+
               # try to fix the duplication issue (true vs. false)
               # this will of course make repeated listening of a song wrong
               # but that shouldn't be too common
               if artist_and_track == prev:
-                   continue
+                continue
               
               prev = artist_and_track
 

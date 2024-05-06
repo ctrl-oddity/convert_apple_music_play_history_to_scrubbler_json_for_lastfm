@@ -15,7 +15,7 @@ with open("Apple Music - Track Play History.csv", newline='', encoding="utf-8") 
                  skip = False
                  continue
               
-              artist_and_track = row[0].split('-')
+              artist_and_track = row[0].split(" - ")
               if len(artist_and_track) < 2:
                 continue
 
